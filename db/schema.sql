@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS company;
-CREATE DATABASE company;
-USE company;
+DROP DATABASE IF EXISTS company_db;
+CREATE DATABASE company_db;
+USE company_db;
 
 CREATE TABLE department (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,

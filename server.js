@@ -35,7 +35,7 @@ const promptMessages = {
             promptMessages.updateRole,
             promptMessages.exit
         ]
-    }).then(selection => {
+    }).then((selection) => {
         console.log('Selected:', selection);
         switch(selection.action) {
           case promptMessages.viewDepartments:
@@ -60,7 +60,7 @@ const promptMessages = {
               viewAllRoles();
               break;
             case promptMessages.exit:
-              db.end();
+              connection.end();
               break;
         }
     });
@@ -72,7 +72,7 @@ const promptMessages = {
   LEFT JOIN role ON (role.id = employee.role_id)
   LEFT JOIN department ON (department.id = role.department_id)
   ORDER BY department.name;`;
-  db.query(query, (err, res) => {
+  connection.query(query, (err, res) => {
     if (err) throw err;
     console.log('YOU ARE VIEWING BY DEPARTMENT');
     console.log('\n');
@@ -88,7 +88,7 @@ const promptMessages = {
   INNER JOIN role ON (role.id = employee.role_id && employee.manager_id != 'NULL')
   INNER JOIN department ON (department.id = role.department_id)
   ORDER BY manager;`;
-  db.query(query, (err, res) => {
+  connection.query(query, (err, res) => {
     if (err) throw err;
     console.log(res)
     console.log('YOU ARE VIEWING BY MANAGER');
@@ -105,7 +105,7 @@ const promptMessages = {
     INNER JOIN role ON (role.id = employee.role_id)
     INNER JOIN department ON (department.id = role.department_id)
     ORDER BY employee.id;`;
-    db.query(query, (err, res) => {
+    connection.query(query, (err, res) => {
         if (err) throw err;
         console.log('YOU ARE VIEWING EMPLOYEES');
         console.log('\n');
@@ -120,7 +120,7 @@ const promptMessages = {
     LEFT JOIN role ON (role.id = employee.role_id)
     LEFT JOIN department ON (department.id = role.department_id)
     ORDER BY role.title;`;
-    db.query(query, (err, res) => {
+    connection.query(query, (err, res) => {
       if (err) throw err;
       console.log('YOU ARE VIEWING ALL THE ROLES');
       console.log('\n');
@@ -131,7 +131,7 @@ const promptMessages = {
 //this just adds a new employee to the database
   async function addEmployee() {
     const newEmpl = await inquirer.prompt(getName());
-    db.query('SELECT role.id, role.title FROM role ORDER BY role.id;', async (err, res) => {
+    connection.query('SELECT role.id, role.title FROM role ORDER BY role.id;', async (err, res) => {
       if (err) throw err;
       const { role } = await inquirer.prompt([
         {
@@ -148,7 +148,7 @@ const promptMessages = {
           continue;
         }
       }
-      db.query('SELECT * FROM employee', async (err, res) => {
+      connection.query('SELECT * FROM employee', async (err, res) => {
         if (err) throw err;
         let choices = res.map(res => `${res.first_name} ${res.last_name}`);
         choices.push('none');
@@ -177,7 +177,7 @@ const promptMessages = {
           }
         }
         console.log('Employee succesfully added! Please review following information to double check!');
-        db.query(
+        connection.query(
           'INSERT INTO employee SET ?',
           {
             first_name: newEmpl.first,
@@ -246,7 +246,7 @@ const promptMessages = {
 //this is used to update your employees roles
   async function updateRole() {
     const employeeId = await inquirer.prompt(askId());
-    db.query('SELECT role.id, role.title FROM role ORDER BY role.id;', async (err, res) => {
+    connection.query('SELECT role.id, role.title FROM role ORDER BY role.id;', async (err, res) => {
       if (err) throw err;
       const { role } = await inquirer.prompt([
         {
@@ -263,7 +263,7 @@ const promptMessages = {
           continue;
         }
       }
-      db.query(`UPDATE employee 
+      connection.query(`UPDATE employee 
         SET role_id = ${roleId}
         WHERE employee.id = ${employeeId.name}`, async (err) => {
         if (err) throw err;
