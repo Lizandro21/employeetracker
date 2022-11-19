@@ -179,6 +179,15 @@ You are required to submit BOTH of the following for review:
 * A walkthrough video demonstrating the functionality of the application.
 
 * The URL of the GitHub repository, with a unique name and a README describing the project.
+---
+Here are some pictures! 
+![Screenshot1](https://i.postimg.cc/T3PHr5Gk/image.png)
+![Screenshot2](https://i.postimg.cc/pdhGSNmz/image.png)
+---
+[YT Video](https://youtu.be/ZQw5up6jvcs)
+[Employee Tracker Repo!](https://github.com/Lizandro21/employeetracker)
+
+This is the link to the video!
 
 - - -
 © 2022 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
